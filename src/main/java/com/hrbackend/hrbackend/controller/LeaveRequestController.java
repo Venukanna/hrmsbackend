@@ -1,7 +1,7 @@
 package com.hrbackend.hrbackend.controller;
 
 import com.hrbackend.hrbackend.dto.LeaveRequestDTO;
-import com.hrbackend.hrbackend.entity.LeaveRequest; // Changed import
+import com.hrbackend.hrbackend.entity.LeaveRequest;
 import com.hrbackend.hrbackend.service.LeaveRequestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/leave-requests")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+// ❌ REMOVE THIS ANNOTATION (conflicts with global CORS config)
 public class LeaveRequestController {
 
     private final LeaveRequestService leaveRequestService;
@@ -21,29 +21,29 @@ public class LeaveRequestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LeaveRequest createLeaveRequest(@RequestBody LeaveRequestDTO dto) { // Updated return type
+    public LeaveRequest createLeaveRequest(@RequestBody LeaveRequestDTO dto) {
         return leaveRequestService.createLeaveRequest(dto);
     }
 
     @GetMapping
-    public List<LeaveRequest> getAllLeaveRequests() { // Updated return type
+    public List<LeaveRequest> getAllLeaveRequests() {
         return leaveRequestService.getAllLeaveRequests();
     }
 
     @GetMapping("/employee/{employeeName}")
-    public List<LeaveRequest> getLeaveRequestsByEmployee(@PathVariable String employeeName) { // Updated
+    public List<LeaveRequest> getLeaveRequestsByEmployee(@PathVariable String employeeName) {
         return leaveRequestService.getLeaveRequestsByEmployee(employeeName);
     }
 
     @GetMapping("/pending")
-    public List<LeaveRequest> getPendingLeaveRequests() { // Updated
+    public List<LeaveRequest> getPendingLeaveRequests() {
         return leaveRequestService.getPendingLeaveRequests();
     }
 
     @PatchMapping("/{id}/status")
-    public LeaveRequest updateLeaveRequestStatus( // Updated return type
-                                                  @PathVariable String id,
-                                                  @RequestParam String status) {
+    public LeaveRequest updateLeaveRequestStatus(
+            @PathVariable String id,
+            @RequestParam String status) {
         return leaveRequestService.updateLeaveRequestStatus(id, status);
     }
 
